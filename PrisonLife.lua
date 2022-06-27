@@ -2,15 +2,16 @@
 local lib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
 local hwnd = lib:MakeWindow {
-    Name = 'Prison Life v0.1a'
+    Name = 'Prison Life v0.1b'
 }
-
-
+--Remove fade frame
+game.Players.LocalPlayer.PlayerGui.Home.fadeFrame.Visible = false
 --Local Variables
 local player = game.Players.LocalPlayer
 local _char = player.Character
 local hum = _char.Humanoid or _char:WaitForChild('Humanoid')
 hum.UseJumpPower = true
+local team = workspace.Remote.TeamEvent
 
 local def_wk = hum.WalkSpeed
 local def_jp = hum.JumpPower
@@ -20,6 +21,14 @@ local PRISON = CFrame.new(919, 101.5, 2376)
 local BASE = CFrame.new(-953.4, 95.7, 2047.6)
 local YARD = CFrame.new(803, 99.5, 2451)
 
+--Hooks
+local oldh
+oldh = hookmetamethod(player, "__newindex", function(slf, prop, value)
+    if not checkcaller() and slf == player then
+       if tostring(prop) == "Team" then return end 
+    end
+    return oldh(slf, prop, value) 
+end)
 
 --Local Tab
 local tab_local = hwnd:MakeTab {
@@ -62,7 +71,18 @@ tab_local:AddButton {
         s_jp:Set(def_jp)
     end
 }
-
+tab_local:AddDropdown({
+	Name = "Teams",
+	Default = "Prisoner",
+	Options = {"Prisoner", "Cop", "Neutral", "Criminal"},
+	Callback = function(Value)
+		local selected = Value
+		if selected == "Prisoner" then team:FireServer("Bright orange") end --Prisoner Team
+        if selected == "Cop" then team:FireServer("Bright blue") end --Cop Team
+        if selected == "Neutral" then team:FireServer("Medium stone grey") end --Neutral Team
+        if selected == "Criminal" then player.Team = game.Teams.Criminals end --Neutral Team
+	end    
+})
 
 --Weapons Tab
 local tab_guns = hwnd:MakeTab {
@@ -91,7 +111,7 @@ tab_guns:AddButton {
         workspace.Remote.ItemHandler:InvokeServer(arg)
     end
 }
-
+        _char = player.Character
 
 --Teleport Tab
 local tab_teleports = hwnd:MakeTab {
@@ -99,36 +119,19 @@ local tab_teleports = hwnd:MakeTab {
     Icon = '',
     PremiumOnly = false
 }
-tab_teleports:AddButton {
-    Name = 'Criminal Base',
-    Callback = function()
-        _char = player.Character
-        _char:SetPrimaryPartCFrame(BASE)
-    end
-}
-tab_teleports:AddButton {
-    Name = 'Prison',
-    Callback = function()
-        _char = player.Character
-        _char:SetPrimaryPartCFrame(PRISON)
-    end
-}
-tab_teleports:AddButton {
-    Name = 'Yard',
-    Callback = function()
-        _char = player.Character
-        _char:SetPrimaryPartCFrame(YARD)
-    end
-}
-tab_teleports:AddButton {
-    Name = 'Police',
-    Callback = function()
-        _char = player.Character
-        _char:SetPrimaryPartCFrame(POLICE)
-    end
-}
-
-
+--Teleport Dropdown
+tab_teleports:AddDropdown({
+	Name = "Teleports",
+	Default = "Prison",
+	Options = {"Prison", "Criminal Base", "Yard", "Police"},
+	Callback = function(Value)
+		local selected = Value
+		if selected == "Criminal Base" then _char:SetPrimaryPartCFrame(BASE) end
+		if selected == "Prison" then _char:SetPrimaryPartCFrame(PRISON) end
+		if selected == "Yard" then _char:SetPrimaryPartCFrame(YARD) end
+		if selected == "Police" then _char:SetPrimaryPartCFrame(POLICE) end
+	end    
+})
 --Cars Tab
 local tab_cars = hwnd:MakeTab {
     Name = 'Cars',
