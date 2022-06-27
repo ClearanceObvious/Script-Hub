@@ -80,7 +80,7 @@ tab_local:AddDropdown({
 		if selected == "Prisoner" then team:FireServer("Bright orange") end --Prisoner Team
         if selected == "Cop" then team:FireServer("Bright blue") end --Cop Team
         if selected == "Neutral" then team:FireServer("Medium stone grey") end --Neutral Team
-        if selected == "Criminal" then player.Team = game.Teams.Criminals end --Neutral Team
+        if selected == "Criminal" then player.Team = game.Teams.Criminals end --Criminal Team
 	end    
 })
 
