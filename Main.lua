@@ -16,6 +16,16 @@ local mouse = player:GetMouse()
 local __teleport = false
 
 
+--Functions
+function CheckID()
+    if game.PlaceId ~= 155615604 then
+        return false, game.PlaceId
+    end
+    
+    return true, game.PlaceId
+end
+
+
 --Events
 mouse.Button1Up:Connect(function()
     if __teleport and game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) then
@@ -28,9 +38,13 @@ end)
 local tab1 = hwnd:MakeTab {
     Name = "Self"
 }
+local tab2 = hwnd:MakeTab {
+    Name = "Game"
+}
 
 
 --Self Tab
+
 --Walkspeed 
 tab1:AddSlider({
 	Name = "Walkspeed",
@@ -58,11 +72,35 @@ tab1:AddSlider({
 		humanoid.JumpPower = Value
 	end    
 })
+
 --Teleport
 tab1:AddToggle {
     Name = "Click to Teleport",
     Default = false,
     Callback = function(val)
         __teleport = val
+    end
+}
+
+
+--Game Tab
+
+--Check Game Button
+tab2:AddButton {
+    Name = "Load Game",
+    Callback = function()
+        if not CheckID() then
+            lib:MakeNotification {
+                Title = "Oops!",
+                Content = "Couldn't find game",
+                Time = 5
+            }
+            return
+        end
+        
+        local args = table.pack(CheckID())
+        if args[2] == 155615604 then    --Prison Life
+            loadstring(game:HttpGet "https://raw.githubusercontent.com/ClearanceObvious/Script-Hub/main/PrisonLife.lua")()
+        end
     end
 }
