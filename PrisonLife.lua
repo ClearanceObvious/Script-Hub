@@ -2,7 +2,7 @@
 local lib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
 local hwnd = lib:MakeWindow {
-    Name = 'Prison Life v0.1b'
+    Name = 'Prison Life v0.2a'
 }
 --Remove fade frame
 game.Players.LocalPlayer.PlayerGui.Home.fadeFrame.Visible = false
@@ -38,7 +38,7 @@ local tab_local = hwnd:MakeTab {
 }
 s_wk = tab_local:AddSlider {
     Name = 'WalkSpeed',
-    Min = 0,
+    Min = 16,
     Max = 200,
     Default = def_wk,
     Color = Color3.fromRGB(255,255,255),
@@ -52,7 +52,7 @@ s_wk = tab_local:AddSlider {
 }
 s_jp = tab_local:AddSlider {
     Name = 'Jump Power',
-    Min = 0,
+    Min = 50,
     Max = 200,
     Default = def_jp,
     Color = Color3.fromRGB(255,255,255),
@@ -73,7 +73,7 @@ tab_local:AddButton {
 }
 tab_local:AddDropdown({
 	Name = "Teams",
-	Default = "Prisoner",
+	Default = "",
 	Options = {"Prisoner", "Cop", "Neutral", "Criminal"},
 	Callback = function(Value)
 		local selected = Value
@@ -122,7 +122,7 @@ local tab_teleports = hwnd:MakeTab {
 --Teleport Dropdown
 tab_teleports:AddDropdown({
 	Name = "Teleports",
-	Default = "Prison",
+	Default = "",
 	Options = {"Prison", "Criminal Base", "Yard", "Police"},
 	Callback = function(Value)
 		local selected = Value
@@ -131,6 +131,29 @@ tab_teleports:AddDropdown({
 		if selected == "Yard" then _char:SetPrimaryPartCFrame(YARD) end
 		if selected == "Police" then _char:SetPrimaryPartCFrame(POLICE) end
 	end    
+})
+--Rage Tab
+local tab_rage = hwnd:MakeTab {
+    Name = 'Rage',
+    Icon = '',
+    PremiumOnly = false
+}
+--Killaura
+tab_rage:AddToggle({
+	Name = "Killaura",
+	Default = false,
+	Callback = function(value)
+    _G.Toggle = value
+    while _G.Toggle == true do
+    wait()
+    for i, e in pairs(game.Players:GetChildren()) do
+        if e ~= game.Players.LocalPlayer then
+            local meleeEvent = game:GetService("ReplicatedStorage").meleeEvent
+                meleeEvent:FireServer(e)
+            end 
+        end 
+    end
+end
 })
 --Cars Tab
 local tab_cars = hwnd:MakeTab {
