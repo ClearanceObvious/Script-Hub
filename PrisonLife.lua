@@ -2,7 +2,7 @@
 local lib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
 local hwnd = lib:MakeWindow {
-    Name = 'Prison Life v0.2a'
+    Name = 'Prison Life v0.1b'
 }
 --Remove fade frame
 game.Players.LocalPlayer.PlayerGui.Home.fadeFrame.Visible = false
@@ -138,7 +138,7 @@ local tab_rage = hwnd:MakeTab {
     Icon = '',
     PremiumOnly = false
 }
---Killaura
+--Killaura TOGGLE
 tab_rage:AddToggle({
 	Name = "Killaura",
 	Default = false,
@@ -152,6 +152,24 @@ tab_rage:AddToggle({
                 meleeEvent:FireServer(e)
             end 
         end 
+    end
+end
+})
+--AutoRespawn
+tab_rage:AddToggle({
+	Name = "Auto Respawn",
+	Default = false,
+	Callback = function(value)
+    _G.Toggle = value
+    while _G.Toggle == true do 
+    wait()
+	if game.Players.LocalPlayer.Character.Humanoid.Health < 1 then 
+    		local lastPos = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").position
+    		local plr = game.Players.LocalPlayer.Name
+    		local gayevent = game:GetService("Workspace").Remote.loadchar
+    		gayevent:InvokeServer(plr)
+    		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(lastPos)
+	    end
     end
 end
 })
