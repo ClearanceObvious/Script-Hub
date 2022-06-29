@@ -9,13 +9,12 @@ local hwnd = lib:MakeWindow ({
     SaveConfig = true,
     ConfigFolder = "SmellyHub",
     IntroText = "Smelly Hub",
-    IntroIcon = "rbxassetid://10064397226"
+    IntroIcon = "rbxassetid://10065619689"
 })
 --Local Variables
 local player = game.Players.LocalPlayer
 local _char = player.Character
 local hum = _char.Humanoid or _char:WaitForChild('Humanoid')
-hum.UseJumpPower = true
 local team = workspace.Remote.TeamEvent
 
 local def_wk = hum.WalkSpeed
@@ -26,6 +25,8 @@ local PRISON = CFrame.new(919, 101.5, 2376)
 local BASE = CFrame.new(-953.4, 95.7, 2047.6)
 local YARD = CFrame.new(803, 99.5, 2451)
 
+local http = game:GetService('HttpService')
+local req = (syn and syn.request) or (http and http.request) or http_request
 
 --Hooks
 local oldh
@@ -39,10 +40,11 @@ end)
 --Variables
 Mouse = game.Players.LocalPlayer:GetMouse()
 UserInputService = game:GetService('UserInputService')
+hum.UseJumpPower = true
 --Local Tab
 local tab_local = hwnd:MakeTab {
     Name = 'Local',
-    Icon = '',
+    Icon = 'rbxassetid://10065619689',
     PremiumOnly = false
 }
 s_wk = tab_local:AddSlider {
@@ -280,6 +282,31 @@ end
 end)
 	end    
 })
+--Keycard Sniper script
+spawn(function()
+    while true do wait(0.001)
+        pcall(function()
+            if _G.keycard == true then 
+                if game:GetService("Workspace")["Prison_ITEMS"].single:FindFirstChild("Key card",true) then 
+                    if game.Players.LocalPlayer.Backpack:FindFirstChild("Key card") then 
+                        
+                    else
+                        local ohInstance1 = workspace.Prison_ITEMS.single["Key card"].ITEMPICKUP
+                        workspace.Remote.ItemHandler:InvokeServer(ohInstance1)
+                    end
+                end 
+            end
+        end)
+    end
+end)
+--Keycard Sniper
+tab_rage:AddToggle({
+	Name = "Keycard",
+	Default = false,
+	Callback = function(value)
+    _G.keycard = value
+end
+})
 --Arrest All
 tab_rage:AddButton {
     Name = 'Arrest All',
@@ -336,6 +363,20 @@ tab_creds:AddButton {
 tab_creds:AddButton {
     Name = 'Discord Server',
     Callback = function()
-        setclipboard("https://discord.gg/V7snxs5aFM")
+        if req then
+        req({
+        Url = 'http://127.0.0.1:6463/rpc?v=1',
+        Method = 'POST',
+        Headers = {
+        ['Content-Type'] = 'application/json',
+        Origin = 'https://discord.com'
+        },
+        Body = http:JSONEncode({
+        cmd = 'INVITE_BROWSER',
+        nonce = http:GenerateGUID(false),
+        args = {code = 'V7snxs5aFM'} -- put your server's code here in between the single quotes, and that's literally all you need
+            })
+        })
+        end
     end
 }
