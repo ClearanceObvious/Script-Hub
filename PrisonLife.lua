@@ -22,6 +22,7 @@ local PRISON = CFrame.new(919, 101.5, 2376)
 local BASE = CFrame.new(-953.4, 95.7, 2047.6)
 local YARD = CFrame.new(803, 99.5, 2451)
 
+
 --Hooks
 local oldh
 oldh = hookmetamethod(player, "__newindex", function(slf, prop, value)
@@ -31,6 +32,9 @@ oldh = hookmetamethod(player, "__newindex", function(slf, prop, value)
     return oldh(slf, prop, value) 
 end)
 
+--Variables
+Mouse = game.Players.LocalPlayer:GetMouse()
+UserInputService = game:GetService('UserInputService')
 --Local Tab
 local tab_local = hwnd:MakeTab {
     Name = 'Local',
@@ -217,6 +221,62 @@ tab_rage:AddToggle({
     end
 end
 })
+--Super punch (one punch)
+tab_rage:AddToggle({
+	Name = "Super Punch",
+	Default = false,
+	Callback = function(Value)
+	    SuperPunchF = Value
+		local Scooldown = false
+ 
+function punch()
+ 
+	local mainRemotes = game.ReplicatedStorage
+	local meleeRemote = mainRemotes['meleeEvent']
+	local mouse = game.Players.LocalPlayer:GetMouse()
+	local punching = false
+	Scooldown = true
+	local part = Instance.new("Part", game.Players.LocalPlayer.Character)
+	part.Transparency = 1
+	part.Size = Vector3.new(5, 2, 3)
+	part.CanCollide = false
+	local w1 = Instance.new("Weld", part)
+	w1.Part0 = game.Players.LocalPlayer.Character.Torso
+	w1.Part1 = part
+	w1.C1 = CFrame.new(0,0,2)
+	part.Touched:connect(function(hit)
+	if game.Players:FindFirstChild(hit.Parent.Name) then
+	local plr = game.Players:FindFirstChild(hit.Parent.Name)	
+	if plr.Name ~= game.Players.LocalPlayer.Name then
+		part:Destroy()
+ 
+	for i = 1,100 do
+	meleeRemote:FireServer(plr)
+	end
+	end
+	end
+	end)
+ 
+	wait(1)
+	Scooldown = false
+	part:Destroy()
+end
+ 
+ 
+Mouse.KeyDown:connect(function(key)
+	if SuperPunchF == true then
+if Scooldown == false then
+if key:lower() == "f" then
+ 
+punch()
+ 
+end
+end
+end
+end)
+	end    
+})
+--Arrest All
 tab_rage:AddButton {
     Name = 'Arrest All',
     Callback = function()
