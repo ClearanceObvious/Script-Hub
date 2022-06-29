@@ -1,11 +1,12 @@
+--Remove fade frame
+game.Players.LocalPlayer.PlayerGui.Home.fadeFrame.Visible = false
+
 --Boot
 local lib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
 local hwnd = lib:MakeWindow {
     Name = 'Prison Life v0.1b'
 }
---Remove fade frame
-game.Players.LocalPlayer.PlayerGui.Home.fadeFrame.Visible = false
 --Local Variables
 local player = game.Players.LocalPlayer
 local _char = player.Character
@@ -71,6 +72,38 @@ tab_local:AddButton {
         s_jp:Set(def_jp)
     end
 }
+tab_local:AddToggle({
+	Name = "Noclip",
+	Default = false,
+	Callback = function(Value)
+local CharParts = {}
+_G.NoClip = Value
+game:GetService("RunService").Stepped:connect(function()
+    if _G.NoClip then
+        for i = 1, #CharParts do
+            CharParts[i].CanCollide = false
+        end
+    end
+end)
+
+function SetupCharCollide(Char)
+    CharParts = {}
+    Char:WaitForChild("Head")
+    for i, v in pairs(Char:GetChildren()) do
+        if v:IsA("BasePart") then
+            table.insert(CharParts, v)
+        end
+    end
+end
+
+if game.Players.LocalPlayer.Character then
+    SetupCharCollide(game.Players.LocalPlayer.Character)
+end
+game.Players.LocalPlayer.CharacterAdded:connect(function(Ch)
+    SetupCharCollide(Ch)
+end)
+end
+})
 tab_local:AddDropdown({
 	Name = "Teams",
 	Default = "",
@@ -80,7 +113,18 @@ tab_local:AddDropdown({
 		if selected == "Prisoner" then team:FireServer("Bright orange") end --Prisoner Team
         if selected == "Cop" then team:FireServer("Bright blue") end --Cop Team
         if selected == "Neutral" then team:FireServer("Medium stone grey") end --Neutral Team
-        if selected == "Criminal" then player.Team = game.Teams.Criminals end --Criminal Team
+        if selected == "Criminal" then
+            LCS = game.Workspace["Criminals Spawn"].SpawnLocation
+ 
+            LCS.CanCollide = false
+            LCS.Size = Vector3.new(51.05, 24.12, 54.76)
+            LCS.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            LCS.Transparency = 1
+            wait(0.5)
+            LCS.CFrame = CFrame.new(-920.510803, 92.2271957, 2138.27002, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            LCS.Size = Vector3.new(6, 0.2, 6)
+            LCS.Transparency = 0 
+        end
 	end    
 })
 
