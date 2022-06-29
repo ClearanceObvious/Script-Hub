@@ -224,3 +224,35 @@ local tab_cars = hwnd:MakeTab {
     PremiumOnly = false
 }
 tab_cars:AddLabel('Coming Soon')
+--Credits Tab
+local tab_creds = hwnd:MakeTab {
+    Name = 'Credits',
+    Icon = '',
+    PremiumOnly = false
+}
+--Credits
+tab_creds:AddLabel('Click to copy!')
+tab_creds:AddButton {
+    Name = 'Main Developer - Iann#4631',
+    Callback = function()
+        setclipboard("Iann#4631")
+    end
+}
+tab_creds:AddButton {
+    Name = 'Main Developer - Tony_.#5397',
+    Callback = function()
+        setclipboard("Tony_.#5397")
+    end
+}
+tab_creds:AddButton {
+    Name = 'UI Library - shlex#0001',
+    Callback = function()
+        setclipboard("shlex#0001")
+    end
+}
+tab_creds:AddButton {
+    Name = 'Discord Server',
+    Callback = function()
+        setclipboard("https://discord.gg/V7snxs5aFM")
+    end
+}
