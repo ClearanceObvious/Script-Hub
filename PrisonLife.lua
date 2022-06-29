@@ -205,7 +205,7 @@ tab_rage:AddToggle({
 	Default = false,
 	Callback = function(value)
     _G.Toggle = value
-    while _G.Toggle == true do 
+    while _G.Toggle do 
     wait()
 	if game.Players.LocalPlayer.Character.Humanoid.Health < 1 then 
     		local lastPos = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").position
@@ -217,6 +217,25 @@ tab_rage:AddToggle({
     end
 end
 })
+tab_rage:AddButton {
+    Name = 'Arrest All',
+    Callback = function()
+        wait(0.1)
+	    Player = game.Players.LocalPlayer
+	    Pcf = Player.Character.HumanoidRootPart.CFrame
+        	for i,v in pairs(game.Teams.Criminals:GetPlayers()) do
+	    if v.Name ~= Player.Name then
+	    local i = 10
+        repeat
+        wait()
+        i = i-1
+        game.Workspace.Remote.arrest:InvokeServer(v.Character.HumanoidRootPart)
+        Player.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1)
+        until i == 0
+        end
+    end
+end
+}
 --Cars Tab
 local tab_cars = hwnd:MakeTab {
     Name = 'Cars',
