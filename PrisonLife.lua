@@ -312,13 +312,13 @@ local tab_creds = hwnd:MakeTab {
 --Credits
 tab_creds:AddLabel('Click to copy!')
 tab_creds:AddButton {
-    Name = 'Main Developer - Iann#4631',
+    Name = 'Developer - Iann#4631',
     Callback = function()
         setclipboard("Iann#4631")
     end
 }
 tab_creds:AddButton {
-    Name = 'Main Developer - Tony_.#5397',
+    Name = 'Developer - Tony_.#5397',
     Callback = function()
         setclipboard("Tony_.#5397")
     end
