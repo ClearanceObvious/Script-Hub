@@ -4,9 +4,13 @@ game.Players.LocalPlayer.PlayerGui.Home.fadeFrame.Visible = false
 --Boot
 local lib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
-local hwnd = lib:MakeWindow {
-    Name = 'Prison Life v0.2b'
-}
+local hwnd = lib:MakeWindow ({
+    Name = 'Prison Life v0.2b',
+    SaveConfig = true,
+    ConfigFolder = "SmellyHub",
+    IntroText = "Smelly Hub",
+    IntroIcon = "rbxassetid://10064397226"
+})
 --Local Variables
 local player = game.Players.LocalPlayer
 local _char = player.Character
