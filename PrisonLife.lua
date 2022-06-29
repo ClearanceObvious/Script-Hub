@@ -5,7 +5,7 @@ game.Players.LocalPlayer.PlayerGui.Home.fadeFrame.Visible = false
 local lib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
 local hwnd = lib:MakeWindow {
-    Name = 'Prison Life v0.1b'
+    Name = 'Prison Life v0.2b'
 }
 --Local Variables
 local player = game.Players.LocalPlayer
@@ -114,16 +114,16 @@ tab_local:AddDropdown({
         if selected == "Cop" then team:FireServer("Bright blue") end --Cop Team
         if selected == "Neutral" then team:FireServer("Medium stone grey") end --Neutral Team
         if selected == "Criminal" then
-            LCS = game.Workspace["Criminals Spawn"].SpawnLocation
+            CrimSpawn = game.Workspace["Criminals Spawn"].SpawnLocation
  
-            LCS.CanCollide = false
-            LCS.Size = Vector3.new(51.05, 24.12, 54.76)
-            LCS.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-            LCS.Transparency = 1
+            CrimSpawn.CanCollide = false
+            CrimSpawn.Size = Vector3.new(51.05, 24.12, 54.76)
+            CrimSpawn.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            CrimSpawn.Transparency = 1
             wait(0.5)
-            LCS.CFrame = CFrame.new(-920.510803, 92.2271957, 2138.27002, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-            LCS.Size = Vector3.new(6, 0.2, 6)
-            LCS.Transparency = 0 
+            CrimSpawn.CFrame = CFrame.new(-920.510803, 92.2271957, 2138.27002, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            CrimSpawn.Size = Vector3.new(6, 0.2, 6)
+            CrimSpawn.Transparency = 0 
         end
 	end    
 })
