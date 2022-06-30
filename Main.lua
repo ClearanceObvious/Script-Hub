@@ -100,7 +100,7 @@ tab2:AddButton {
         
         local args = table.pack(CheckID())
         if args[2] == 155615604 then    --Prison Life
-            loadstring(game:HttpGet "https://raw.githubusercontent.com/ClearanceObvious/Script-Hub/main/PrisonLifeDONE.lua")()
+            loadstring(game:HttpGet(('https://raw.githubusercontent.com/ClearanceObvious/Script-Hub/main/PrisonLifeDONE.lua')))()
         end
     end
 }
