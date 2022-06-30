@@ -1,5 +1,11 @@
 local lib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local hwnd = lib:MakeWindow ({Name = "Smelly Hub" ConfigFolder = "SmellyHub", IntroText = "Smelly Hub", IntroIcon = "rbxassetid://10065619689"})
+local hwnd = lib:MakeWindow ({
+    Name = 'Smelly Hub',
+    SaveConfig = true,
+    ConfigFolder = "SmellyHub",
+    IntroText = "Smelly Hub",
+    IntroIcon = "rbxassetid://10065619689"
+})
 lib:MakeNotification {
     Title = "Smelly Hub UI",
     Content = "Welcome Back!",
