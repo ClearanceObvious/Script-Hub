@@ -223,13 +223,17 @@ local tab_teleports = hwnd:MakeTab {
 tab_teleports:AddDropdown({
 	Name = "Teleports",
 	Default = "",
-	Options = {"Prison", "Criminal Base", "Yard", "Police"},
+	Options = {"Prison", "Crims Base", "Cells", "Police", "Courtyard", "Cafe", "Tower", "Guard Room", "Gas Station"},
 	Callback = function(Value)
 		local selected = Value
-		if selected == "Criminal Base" then _char:SetPrimaryPartCFrame(BASE) end
-		if selected == "Prison" then _char:SetPrimaryPartCFrame(PRISON) end
-		if selected == "Yard" then _char:SetPrimaryPartCFrame(YARD) end
-		if selected == "Police" then _char:SetPrimaryPartCFrame(POLICE) end
+    if selected == "Prison" then game.Players.LocalPlayer.Character:MoveTo(Vector3.new(912, 100, 2369)) end
+    if selected == "Cells" then game.Players.LocalPlayer.Character:MoveTo(Vector3.new(908, 100, 2455)) end
+    if selected == "Courtyard" then game.Players.LocalPlayer.Character:MoveTo(Vector3.new(782, 98, 2455)) end
+    if selected == "Cafe" then game.Players.LocalPlayer.Character:MoveTo(Vector3.new(921, 100, 2287)) end
+    if selected == "Crims base" then game.Players.LocalPlayer.Character:MoveTo(Vector3.new(-877, 94, 2060)) end
+    if selected == "Tower" then game.Players.LocalPlayer.Character:MoveTo(Vector3.new(825, 130, 2574)) end
+    if selected == "Guard Room" then game.Players.LocalPlayer.Character:MoveTo(Vector3.new(833, 100, 2315)) end
+    if selected == "Gas Station" then game.Players.LocalPlayer.Character:MoveTo(Vector3.new(-518, 54, 1659)) end
 	end    
 })
 --Rage Tab
